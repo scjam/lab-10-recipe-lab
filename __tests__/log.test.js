@@ -3,7 +3,7 @@ const pool = require('../lib/utils/pool');
 const request = require('supertest');
 const app = require('../lib/app');
 const Log = require('../lib/models/Log');
-const Recipe = require('../lib/models/Recipe');
+const Recipe = require('../lib/models/recipe');
 
 
 describe('log routes', () => {
