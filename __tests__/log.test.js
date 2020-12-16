@@ -80,4 +80,24 @@ describe('log routes', () => {
         expect(res.body).toEqual(log);
       });
   });
+
+  it('updates a log via PUT', async() => {
+    return request(app)
+      .put(`/api/v1/logs/${log.id}`)
+      .send({
+        recipeId: recipe.id,
+        dateOfEvent: '2020-12-20',
+        notes: 'dinner',
+        rating: 50  
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          id: expect.any(String),
+          recipeId: recipe.id,
+          dateOfEvent: '2020-12-20',
+          notes: 'dinner',
+          rating: 50 
+        });
+      });
+  });
 });
