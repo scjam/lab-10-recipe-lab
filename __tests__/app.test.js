@@ -12,6 +12,7 @@ describe('recipe-lab routes', () => {
     await pool.query(fs.readFileSync('./sql/setup.sql', 'utf-8'));
     recipe = await Recipe.insert({
       name: 'gingerbread cookies',
+      ingredients: [{ amount: '1', measurement: 'cup', name: 'molasses' }],
       directions: []
     });
   });
