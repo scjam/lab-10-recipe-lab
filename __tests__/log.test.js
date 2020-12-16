@@ -100,4 +100,12 @@ describe('log routes', () => {
         });
       });
   });
+
+  it('deletes a log via DELETE', async() => {
+    return request(app)
+      .delete(`/api/v1/logs/${log.id}`)
+      .then(res => {
+        expect(res.body).toEqual(log);
+      });
+  });
 });
