@@ -2,11 +2,26 @@ const fs = require('fs');
 const pool = require('../lib/utils/pool');
 const request = require('supertest');
 const app = require('../lib/app');
+const Recipe = require('../lib/models/Recipe');
+const Log = require('../lib/models/Log');
 
 
 describe('log routes', () => {
-  beforeEach(() => {
-    return pool.query(fs.readFileSync('./sql/setup.sql', 'utf-8'));
+  let recipe;
+  let log;
+  
+  beforeEach(async() => {
+    await pool.query(fs.readFileSync('./sql/setup.sql', 'utf-8'));
+    recipe = await Recipe.insert({
+      name: 'gingerbread cookies',
+      directions: []
+    });
+    log = await Log.insert({
+      recipeId: recipe.id,
+      dateOfEvent: '2020-12-25',
+      notes: 'nice texture',
+      rating: 90  
+    });
   });
 
   afterAll(() => {
@@ -18,15 +33,16 @@ describe('log routes', () => {
       .post('/api/v1/logs')
       .send({
         dateOfEvent: '2021-01-01',
-        notes: 'good',
+        notes: 'party',
         rating: 80
       })
       .then(res => {
         expect(res.body).toEqual({
           id: expect.any(String),
+          recipeId: null,
           dateOfEvent: '2021-01-01',
-          notes: 'good',
-          rating: '80'
+          notes: 'party',
+          rating: 80
         });
       });
   });
