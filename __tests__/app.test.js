@@ -55,6 +55,19 @@ describe('recipe-lab routes', () => {
       });
   });
 
+  it('gets a recipe by id', async() => {
+    const recipe = await Recipe.insert({
+      name: 'beef wellington',
+      directions: []
+    });
+
+    return request(app)
+      .get(`/api/v1/recipes/${recipe.id}`)
+      .then(res => {
+        expect(res.body).toEqual(recipe);
+      });
+  });
+
   it('updates a recipe by id', async() => {
     const recipe = await Recipe.insert({
       name: 'cookies',
