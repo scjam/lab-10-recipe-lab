@@ -73,5 +73,11 @@ describe('log routes', () => {
       });
   });
 
-  
+  it('gets log by id via GET', async() => {
+    return request(app)
+      .get(`/api/v1/logs/${log.id}`)
+      .then(res => {
+        expect(res.body).toEqual(log);
+      });
+  });
 });
